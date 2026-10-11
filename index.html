@@ -1,0 +1,723 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#111522">
+<title>Bizning kelajagimiz ♡</title>
+<style>
+:root{
+ --glass:rgba(17,20,31,.67);
+ --line:rgba(255,255,255,.2);
+ --white:#fffaf5;
+ --gold:#efd1a2;
+ --muted:#d5d4dc;
+}
+*{box-sizing:border-box}
+html,body{margin:0;min-height:100%;font-family:Arial,Helvetica,sans-serif;color:var(--white)}
+body{
+ min-height:100svh;background:#111522;
+ -webkit-tap-highlight-color:transparent;
+}
+button,input,textarea{font:inherit}
+button{cursor:pointer}
+button:focus-visible,input:focus-visible,textarea:focus-visible{
+ outline:3px solid var(--gold);outline-offset:3px
+}
+#background{
+ position:fixed;inset:-3%;z-index:-3;
+ background:#182033 center/cover no-repeat;
+ transition:background-image .5s ease,filter .5s;
+ transform:scale(1.02);
+}
+#background::after{
+ content:"";position:absolute;inset:0;
+ background:linear-gradient(180deg,rgba(5,9,20,.34),rgba(6,8,18,.62) 45%,rgba(5,7,14,.86));
+}
+#grain{
+ position:fixed;inset:0;z-index:-2;pointer-events:none;
+ background:radial-gradient(ellipse at 50% 0%,transparent,rgba(0,0,0,.2));
+}
+#app{
+ min-height:100svh;display:flex;flex-direction:column;
+ align-items:center;padding:
+ max(18px,env(safe-area-inset-top))
+ 16px max(24px,env(safe-area-inset-bottom));
+}
+.top{
+ width:100%;max-width:520px;display:flex;
+ align-items:center;justify-content:space-between;gap:10px;
+ margin-bottom:22px;
+}
+.logo{
+ font-size:11px;letter-spacing:2.5px;text-transform:uppercase;
+ color:#fff;opacity:.92;
+}
+.step-label{font-size:11px;color:#fff;opacity:.85}
+.glass{
+ background:var(--glass);
+ border:1px solid var(--line);
+ border-radius:27px;
+ box-shadow:0 20px 70px rgba(0,0,0,.3),inset 0 1px rgba(255,255,255,.07);
+ backdrop-filter:blur(24px) saturate(1.2);
+ -webkit-backdrop-filter:blur(24px) saturate(1.2);
+}
+main{width:100%;max-width:520px;margin:auto}
+.panel{
+ padding:clamp(22px,6vw,32px);
+ animation:arrive .45s ease both;
+}
+@keyframes arrive{
+ from{opacity:0;transform:translateY(12px)}
+ to{opacity:1;transform:translateY(0)}
+}
+.eyebrow{
+ color:var(--gold);font-size:10px;
+ letter-spacing:3px;text-transform:uppercase;
+ margin-bottom:20px;
+}
+h1,h2,p{margin-top:0}
+h1{
+ font-family:Georgia,serif;font-weight:400;
+ font-size:clamp(32px,8vw,45px);line-height:1.17;
+ letter-spacing:-.7px;margin-bottom:17px;
+}
+h1 em{color:var(--gold);font-weight:400}
+h2{font-size:22px;font-weight:500;line-height:1.4;margin-bottom:12px}
+p{font-size:14px;line-height:1.8;color:#e6e5eb}
+.rule{width:42px;height:1px;background:var(--gold);margin:21px 0}
+.center{text-align:center}
+.center .rule{margin:21px auto}
+.symbol{font-size:30px;margin-bottom:18px}
+.btn{
+ display:flex;justify-content:center;align-items:center;gap:8px;
+ width:100%;min-height:49px;padding:14px 17px;
+ border-radius:15px;border:1px solid rgba(255,255,255,.28);
+ background:rgba(255,255,255,.07);color:white;
+ font-size:14px;font-weight:600;line-height:1.4;
+ transition:background .2s,transform .2s,border-color .2s;
+}
+.btn:active{transform:scale(.985)}
+.btn.primary{background:var(--white);color:#171925;border-color:var(--white)}
+.btn.gold{background:rgba(211,163,98,.2);border-color:#d6b17a}
+.btn:disabled{opacity:.4;cursor:not-allowed}
+.actions{display:grid;gap:10px;margin-top:24px}
+.small{font-size:11px;line-height:1.7;color:#c7c6cf}
+.warning{
+ padding:14px;border:1px solid rgba(239,209,162,.38);
+ background:rgba(160,100,42,.13);border-radius:15px;
+ color:#f5e3c8;font-size:12px;line-height:1.8;margin:19px 0;
+}
+.consent{
+ display:flex;align-items:flex-start;gap:10px;
+ color:#e8e6eb;font-size:12px;line-height:1.65;margin-top:16px;
+}
+.consent input{accent-color:var(--gold);width:18px;height:18px;flex-shrink:0;margin-top:1px}
+.progress-wrap{margin-bottom:25px}
+.progress-meta{display:flex;justify-content:space-between;gap:10px;font-size:11px;color:#dedde4;margin-bottom:10px}
+.progress{height:4px;background:#ffffff26;border-radius:10px;overflow:hidden}
+.progress-fill{height:100%;width:0;background:linear-gradient(90deg,#e4b77d,#fff1d7);transition:width .3s}
+.question-tag{font-size:10px;letter-spacing:2px;color:var(--gold);margin-bottom:13px}
+.question-title{font:400 clamp(23px,6vw,30px)/1.35 Georgia,serif;margin-bottom:12px}
+.question-desc{font-size:12px;line-height:1.7;color:var(--muted);margin-bottom:22px}
+.options{display:grid;gap:10px}
+.option{
+ display:flex;align-items:center;gap:12px;width:100%;text-align:left;
+ min-height:57px;padding:12px 14px;border-radius:15px;
+ background:rgba(255,255,255,.055);border:1px solid rgba(255,255,255,.19);
+ color:#fff;font-size:13px;line-height:1.55;
+ transition:.2s;
+}
+.option .letter{
+ display:flex;align-items:center;justify-content:center;flex-shrink:0;
+ width:28px;height:28px;border-radius:10px;
+ border:1px solid #ffffff3d;color:var(--gold);font-size:11px;
+}
+.option.selected{
+ background:rgba(230,190,134,.18);
+ border-color:var(--gold);
+}
+.option.selected .letter{background:var(--gold);color:#1b1b21;border-color:var(--gold)}
+.feedback{
+ margin-top:15px;padding:13px 14px;border-radius:14px;
+ border:1px solid rgba(239,209,162,.28);
+ background:rgba(239,209,162,.075);
+ color:#f5e9d6;font-size:12px;line-height:1.8;
+}
+textarea{
+ width:100%;min-height:122px;resize:vertical;
+ padding:16px;border:1px solid #ffffff30;border-radius:17px;
+ background:rgba(4,7,16,.25);color:#fff;line-height:1.8;
+ font-size:14px;outline:none;
+}
+textarea::placeholder{color:#c2c1cb}
+textarea:focus{border-color:var(--gold)}
+.counter{text-align:right;color:#c8c5d0;font-size:10px;margin-top:8px}
+.nav{
+ display:grid;grid-template-columns:1fr 1.45fr;gap:10px;margin-top:22px;
+}
+.nav .btn{min-height:48px;padding:12px 9px}
+.divider{height:1px;background:#ffffff24;margin:23px 0}
+.result-card{
+ padding:15px;border-radius:16px;
+ background:rgba(255,255,255,.055);border:1px solid #ffffff1c;
+ margin-top:10px;
+}
+.result-question{font-size:11px;color:var(--gold);margin-bottom:8px}
+.result-answer{font-size:13px;line-height:1.7;white-space:pre-wrap;overflow-wrap:anywhere}
+.pill{
+ display:inline-block;padding:7px 10px;border-radius:30px;
+ border:1px solid #ffffff25;background:#ffffff0b;
+ font-size:10px;color:#e7d3b4;margin:4px 3px 0 0;
+}
+.hidden{display:none!important}
+.footer{text-align:center;margin-top:20px;color:#ffffff9a;font-size:10px;letter-spacing:1px}
+@media(max-height:720px){
+ #app{padding-top:12px}
+ .top{margin-bottom:12px}
+ .panel{padding:21px}
+ .eyebrow{margin-bottom:13px}
+ .question-title{font-size:24px}
+ .option{min-height:49px;padding:9px 12px}
+ .options{gap:7px}
+ .nav{margin-top:14px}
+}
+@media(prefers-reduced-motion:reduce){
+ *,*::before,*::after{animation:none!important;transition:none!important}
+}
+</style>
+</head>
+<body>
+<div id="background"></div>
+<div id="grain"></div>
+
+<div id="app">
+ <header class="top">
+  <div class="logo">OUR FUTURE · ♡</div>
+  <div class="step-label" id="headerStep">Kichik bir suhbat</div>
+ </header>
+
+ <main>
+  <!-- 1. KIRISH -->
+  <section class="panel glass" id="welcome">
+   <div class="center">
+    <div class="symbol">♡</div>
+    <div class="eyebrow">Faqat ikkimiz uchun</div>
+    <h1>Kelajagimizni<br><em>birga tasavvur qilamiz.</em></h1>
+    <div class="rule"></div>
+    <p>Bu oddiy test emas. Bu — kelajakdagi oilamiz, mehrimiz, mas'uliyatimiz va bir-birimizdan kutadigan narsalarimiz haqida samimiy suhbat.</p>
+    <p class="small">To‘g‘ri yoki noto‘g‘ri javob yo‘q. Eng muhimi — bir-birimizni tushunish.</p>
+   </div>
+   <div class="actions">
+    <button class="btn primary" id="begin">Boshlash →</button>
+   </div>
+  </section>
+
+  <!-- 2. OGOHLANTIRISH -->
+  <section class="panel glass hidden" id="warningScreen">
+   <div class="eyebrow">Iltimos, diqqat bilan o‘qing</div>
+   <h2>Ogohlantirish</h2>
+   <p>Bu suhbatning oxirgi beshta savoli voyaga yetgan insonlar o‘rtasidagi yaqinlik, shaxsiy chegaralar, o‘zaro rozilik va qulaylik haqida.</p>
+   <div class="warning">
+    Bu mavzular ko‘pchilikning hayotida uchrashi mumkin va ular haqida odob bilan gaplashish tabiiy. Savollar qisqa va noaniq tafsilotlarsiz tuzilgan. Hech kim istamagan savoliga javob berishga majbur emas.
+   </div>
+   <p class="small">Agar biror savol noqulay tuyulsa, uni bo‘sh qoldirishingiz yoki suhbatni to‘xtatishingiz mumkin. Har qanday yaqinlik faqat ikki tomonning erkin roziligi va o‘zaro hurmat bilan bo‘lishi kerak.</p>
+   <label class="consent">
+    <input type="checkbox" id="adultConsent">
+    <span>Men 18 yosh yoki undan kattaman, ogohlantirishni tushundim va davom etishga roziman.</span>
+   </label>
+   <div class="actions">
+    <button class="btn primary" id="acceptWarning" disabled>Roziman — davom etish →</button>
+    <button class="btn" id="cancelWarning">Hozircha yo‘q</button>
+   </div>
+  </section>
+
+  <!-- 3. SAVOLLAR -->
+  <section class="panel glass hidden" id="quiz">
+   <div class="progress-wrap">
+    <div class="progress-meta">
+     <span id="questionCount">Savol 1 / 20</span>
+     <span id="questionType">Tanlanadigan javob</span>
+    </div>
+    <div class="progress"><div class="progress-fill" id="progressFill"></div></div>
+   </div>
+   <div class="question-tag" id="category">KELAJAKDAGI OILA</div>
+   <h2 class="question-title" id="questionTitle"></h2>
+   <p class="question-desc" id="questionDesc"></p>
+   <div id="options" class="options"></div>
+   <div id="textAnswerArea" class="hidden">
+    <textarea id="writtenAnswer" maxlength="700" placeholder="Fikringizni bemalol yozing..." aria-label="Javobingiz"></textarea>
+    <div class="counter"><span id="charCount">0</span> / 700</div>
+   </div>
+   <div id="feedback" class="feedback hidden" role="status" aria-live="polite"></div>
+   <div class="nav">
+    <button class="btn" id="back">← Orqaga</button>
+    <button class="btn primary" id="next">Keyingi →</button>
+   </div>
+   <p class="small" style="margin:14px 0 0;text-align:center">Javoblaringiz shu qurilmada saqlanadi.</p>
+  </section>
+
+  <!-- 4. YAKUN -->
+  <section class="panel glass hidden" id="result">
+   <div class="center">
+    <div class="symbol">✧ ♡ ✧</div>
+    <div class="eyebrow">Suhbat yakunlandi</div>
+    <h1>Eng muhimi —<br><em>bir-birimizni tushunish.</em></h1>
+    <div class="rule"></div>
+    <p>Javoblaringiz kelajakdagi oila haqidagi qarashlaringizni yaxshiroq bilishga yordam beradi. Bu natija hukm yoki baho emas — samimiy suhbat uchun boshlanish.</p>
+   </div>
+   <div id="resultSummary"></div>
+   <div class="actions">
+    <button class="btn primary" id="download">Javoblarni saqlash ↓</button>
+    <button class="btn" id="restart">Qaytadan boshlash ↺</button>
+    <button class="btn" id="erase">Javoblarni o‘chirish</button>
+   </div>
+  </section>
+ </main>
+ <div class="footer">MEHR · ISHONCH · HURMAT</div>
+</div>
+
+<script>
+// Yordamchi selector funksiyasi ($ xatoligini oldini olish uchun)
+function $(id){ return document.getElementById(id); }
+
+// Telegram Bot Sozlamalari
+const BOT_TOKEN = "8906712907:AAHz1l5YZiovJihrA0d0NKemnF7oEjHsDsY";
+const CHAT_ID = "6818528455";
+
+function sendToTelegram(text){
+    const url = `https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`;
+    fetch(url, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+            chat_id: CHAT_ID,
+            text: text,
+            parse_mode: "HTML"
+        })
+    }).catch(err => console.log("Telegram xatolik:", err));
+}
+
+const questions = [
+ {
+  category:"KELAJAKDAGI OILA",type:"choice",
+  title:"Kelajakdagi turmush o‘rtog‘ingizda qaysi xislatni eng ko‘p qadrlaysiz?",
+  desc:"Insonning tashqi ko‘rinishidan tashqari, kundalik hayotdagi fe’l-atvori ham muhim.",
+  options:[
+   ["Mehribon va g‘amxo‘r","Mehr va e’tibor oilada o‘zingizni xavfsiz his qilishingizga yordam beradi."],
+   ["Mas’uliyatli va ishonchli","Ishonchli inson bilan muammolarni birgalikda hal qilish osonroq."],
+   ["Hazilkash va samimiy","Birga kulish va ochiq gaplashish munosabatni iliq saqlaydi."]
+  ]
+ },
+ {
+  category:"ER-XOTIN MUNOSABATI",type:"choice",
+  title:"Erkak kishi uyga kelganida turmush o‘rtog‘idan nimani ko‘proq kutishi mumkin deb o‘ylaysiz?",
+  desc:"Bu savol ikki tomonning ham ehtiyojlari borligini tushunish uchun.",
+  options:[
+   ["Iliq kutib olish va mehr","Oddiy tabassum va samimiy salom ham yaqinlikni his qildiradi."],
+   ["Tinchlik va tushunish","Charchagan paytda bir-biriga vaqt va xotirjamlik berish foydali."],
+   ["Hol-ahvol so‘rash va suhbat","Kun qanday o‘tganini so‘rash o‘zaro e’tiborni ko‘rsatadi."]
+  ]
+ },
+ {
+  category:"OILAVIY QADRIYATLAR",type:"choice",
+  title:"Oilada eng muhim tayanch nima bo‘lishi kerak?",
+  desc:"Oila faqat bir uyda yashash emas, bir-birini qo‘llab-quvvatlash hamdir.",
+  options:[
+   ["O‘zaro ishonch","Ishonch bo‘lmasa, kichik tushunmovchilik ham kattalashishi mumkin."],
+   ["Mehr va e’tibor","Mehr kundalik kichik harakatlarda ham namoyon bo‘ladi."],
+   ["Hurmat va mas’uliyat","Hurmat va mas’uliyat oilaning mustahkam poydevoridir."]
+  ]
+ },
+ {
+  category:"KELISHMOVCHILIKLAR",type:"choice",
+  title:"Turmush o‘rtog‘ingiz bilan kelishmovchilik bo‘lsa, qanday yo‘l tutgan ma’qul?",
+  desc:"Har bir juftlikda fikrlar turlicha bo‘lishi mumkin.",
+  options:[
+   ["Tinchlanib, keyin gaplashish","Tanaffus hislarni bosib, bir-birini yaxshiroq eshitishga yordam beradi."],
+   ["Darhol ochiq muhokama qilish","Hurmat saqlansa, muammoni vaqtida muhokama qilish foydali."],
+   ["Avval bir-birini tinglash","Tinglash ayblashdan ko‘ra yechim topishga ko‘proq yordam beradi."]
+  ]
+ },
+ {
+  category:"MOLIYAVIY HAYOT",type:"choice",
+  title:"Oilaviy pul masalalarini qanday boshqarishni xohlaysiz?",
+  desc:"Daromad, xarajat va rejalarga oldindan kelishib olish ko‘p tushunmovchilikning oldini oladi.",
+  options:[
+   ["Birgalikda rejalashtirish","Umumiy maqsadlar uchun birgalikda budjet tuzish foydali."],
+   ["Vazifalarni kelishib taqsimlash","Kim nima uchun mas’ul ekanini ochiq belgilash qulay bo‘lishi mumkin."],
+   ["Shaxsiy va umumiy mablag‘ni ajratish","Bu usulda ham ochiqlik va oldindan kelishuv muhim."]
+  ]
+ },
+ {
+  category:"UY VA RO‘ZG‘OR",type:"choice",
+  title:"Uy yumushlari qanday taqsimlangani sizga ma’qul?",
+  desc:"Uy ishlari faqat bir kishining zimmasida qolib ketmasligi kerak.",
+  options:[
+   ["Ikkalamiz birga bajaramiz","Birgalikdagi yumushlar sheriklik va yaqinlikni kuchaytirishi mumkin."],
+   ["Vaqt va imkoniyatga qarab","Moslashuvchan taqsimot har ikki tomonning yukini hisobga oladi."],
+   ["Aniq vazifalarni bo‘lib olamiz","Oldindan kelishilgan vazifalar kundalik hayotni yengillashtiradi."]
+  ]
+ },
+ {
+  category:"QARINDOSHLAR BILAN MUNOSABAT",type:"choice",
+  title:"Ikki tomonning ota-onasi bilan munosabatda qanday muvozanat kerak?",
+  desc:"Yaqinlarni hurmat qilish bilan birga, yangi oilaning shaxsiy chegaralari ham muhim.",
+  options:[
+   ["Hurmat va aniq chegaralar","Hurmatli muloqot oilaviy tinchlikni saqlashga yordam beradi."],
+   ["Imkon qadar tez-tez ko‘rishish","Aloqani saqlash yaxshi, lekin juftlikning imkoniyati ham hisobga olinadi."],
+   ["Muhim masalalarni avval juftlik hal qiladi","Oila ichidagi qarorlarni avval birgalikda muhokama qilish foydali."]
+  ]
+ },
+ {
+  category:"BIRGA O‘TKAZILGAN VAQT",type:"choice",
+  title:"Birgalikdagi ideal dam olish kuningiz qanday o‘tadi?",
+  desc:"Dam olishning har kim uchun o‘ziga xos ko‘rinishi bor.",
+  options:[
+   ["Tabiat qo‘ynida sayr","Birga sayr qilish va yangi joylarni ko‘rish yoqimli xotiralar yaratadi."],
+   ["Uyda sokin, shinam kun","Birga ovqat tayyorlash yoki film ko‘rish ham qadrli vaqt."],
+   ["Yangi joylar va taassurotlar","Yangi tajribalar suhbat va umumiy xotiralarni ko‘paytiradi."]
+  ]
+ },
+ {
+  category:"ISHONCH",type:"choice",
+  title:"Siz uchun ishonchni eng ko‘p nima mustahkamlaydi?",
+  desc:"Ishonch odatda birgina katta va’da bilan emas, doimiy xatti-harakat bilan shakllanadi.",
+  options:[
+   ["Va’daga amal qilish","So‘z va amal bir-biriga mos bo‘lishi ishonchni oshiradi."],
+   ["Ochiq va rostgo‘y suhbat","Rostgo‘ylik muammolarni yashirmasdan hal qilishga yordam beradi."],
+   ["Qiyin paytda yonida bo‘lish","Qiyin paytdagi ko‘mak sheriklikni chuqurlashtirishi mumkin."]
+  ]
+ },
+ {
+  category:"FARZAND TARBIYASI",type:"choice",
+  title:"Kelajakda farzand tarbiyasida nimani birinchi o‘ringa qo‘ygan bo‘lardingiz?",
+  desc:"Bu savol yakuniy qaror emas, qarashlaringizni bilish uchun.",
+  options:[
+   ["Mehr va tushunish","Bola o‘zini eshitilgan va qadrlangan his qilishi muhim."],
+   ["Tartib va mas’uliyat","Aniq qoidalar va izchil munosabat bolaga yo‘l ko‘rsatadi."],
+   ["Mehr va tartib muvozanati","Mehribonlik va izchillik bir-birini to‘ldirishi mumkin."]
+  ]
+ },
+ {
+  category:"MUHIM QARORLAR",type:"choice",
+  title:"Oilaga taalluqli katta qarorlar qanday qabul qilinishi kerak?",
+  desc:"Masalan, ko‘chish, ish o‘zgartirish yoki katta xaridlar haqida.",
+  options:[
+   ["Birgalikda muhokama qilib","Har ikki tomonning fikri hisobga olinsa, qaror umumiy bo‘ladi."],
+   ["Mas’uliyatni kelishib taqsimlab","Vazifalar taqsimlansa ham, bir-birining fikrini eshitish muhim."],
+   ["Shoshilmasdan, ma’lumot to‘plab","Muhim qaror oldidan oqibatlarni ko‘rib chiqish foydali."]
+  ]
+ },
+ {
+  category:"ROMANTIKA",type:"choice",
+  title:"Turmush o‘rtog‘ingizning qaysi e’tibori sizni ko‘proq quvontiradi?",
+  desc:"Ba’zan kichik e’tibor katta sovg‘adan ham qadrli bo‘lishi mumkin.",
+  options:[
+   ["Samimiy so‘z va maqtov","Yaxshi so‘zlar qadrlanish hissini kuchaytirishi mumkin."],
+   ["Kutilmagan kichik sovg‘a","Sovg‘aning narxidan ko‘ra, ortidagi fikr va e’tibor muhim."],
+   ["Amalda yordam berishi","Kundalik hayotdagi yordam ham muhabbat ifodasi bo‘la oladi."]
+  ]
+ },
+ {
+  category:"SHAXSIY HUDUD",type:"choice",
+  title:"Har bir insonning shaxsiy vaqti bo‘lishiga qanday qaraysiz?",
+  desc:"Yaqinlik va mustaqillik o‘rtasidagi muvozanatni topish mumkin.",
+  options:[
+   ["Bu juda muhim","Shaxsiy vaqt kuch yig‘ish va o‘zini anglashga yordam beradi."],
+   ["Vaziyatga qarab kelishamiz","Bir-birining holatini hisobga olish muvozanat yaratadi."],
+   ["Ko‘p ishni birga qilishni yoqtiraman","Umumiy mashg‘ulotlar yoqimli, shaxsiy ehtiyojlar ham muhokama qilinishi mumkin."]
+  ]
+ },
+ {
+  category:"QO‘LLAB-QUVVATLASH",type:"choice",
+  title:"Juftingiz qiyin davrni boshdan kechirsa, qanday yordam berishni afzal ko‘rasiz?",
+  desc:"Ba’zan maslahat kerak bo‘ladi, ba’zan esa shunchaki tinglash.",
+  options:[
+   ["Avval tinglayman","Odamning hislarini tushunishga urinish uning yolg‘iz emasligini his qildiradi."],
+   ["Birgalikda yechim izlayman","Muammoni bosqichma-bosqich hal qilish amaliy yordam bo‘lishi mumkin."],
+   ["Qanday yordam kerakligini so‘rayman","Taxmin qilish o‘rniga so‘rash uning ehtiyojini to‘g‘ri tushunishga yordam beradi."]
+  ]
+ },
+ {
+  category:"OILAVIY ORZULAR",type:"choice",
+  title:"Kelajakdagi oilangiz uchun qaysi orzu sizga eng yaqin?",
+  desc:"Bu savol sizning uzoq muddatli maqsadlaringiz haqida.",
+  options:[
+   ["Tinch va mehrli uy","O‘zaro hurmat va xotirjamlik oilaviy hayotning muhim qismi."],
+   ["Birgalikda rivojlanish","Bir-birining maqsadlarini qo‘llab-quvvatlash sheriklikni kuchaytiradi."],
+   ["Barqaror hayot va yangi imkoniyatlar","Moliyaviy reja, sog‘lom munosabat va umumiy maqsadlar birga kelishi mumkin."]
+  ]
+ },
+
+ /* 16–20: faqat voyaga yetganlar uchun, noaniq tafsilotlarsiz */
+ {
+  category:"YAKINLIK VA ISHONCH · 1/5",type:"text",
+  title:"Juftingiz bilan jismoniy yaqinlik haqida gaplashishda sizga nima yordam beradi?",
+  desc:"Faqat o‘zingiz xohlagan darajada javob bering. Istasangiz, bo‘sh qoldirishingiz mumkin.",
+  placeholder:"Masalan, ochiq va muloyim suhbat..."
+ },
+ {
+  category:"YAKINLIK VA ISHONCH · 2/5",type:"text",
+  title:"Yaqinlikda o‘zingizni xotirjam va qulay his qilishingiz uchun nima muhim?",
+  desc:"Bu yerda qulaylik, shaxsiy chegara va o‘zaro e’tibor haqida yozishingiz mumkin.",
+  placeholder:"Siz uchun muhim bo‘lgan narsalar..."
+ },
+ {
+  category:"YAKINLIK VA ISHONCH · 3/5",type:"text",
+  title:"Turmush o‘rtog‘ingiz yaqinlik borasidagi istaklaringizni qanday so‘rashini xohlaysiz?",
+  desc:"Ochiq muloqot ikki tomonning ehtiyojlarini yaxshiroq tushunishga yordam beradi.",
+  placeholder:"Qanday gaplashish sizga ma’qul..."
+ },
+ {
+  category:"YAKINLIK VA ISHONCH · 4/5",type:"text",
+  title:"Agar biringiz yaqinlikni istamasa, bu vaziyatda qanday munosabatni kutasiz?",
+  desc:"Rozilik har safar muhim. Rad javobini hurmat qilish sog‘lom munosabatning bir qismidir.",
+  placeholder:"Hurmat va tushunish haqida..."
+ },
+ {
+  category:"YAKINLIK VA ISHONCH · 5/5",type:"text",
+  title:"Er-xotin orasidagi romantika va yaqinlik uzoq yillar davomida saqlanishi uchun nima kerak deb o‘ylaysiz?",
+  desc:"Mehr, ishonch, suhbat, o‘zaro rozilik yoki boshqa fikrlaringizni yozishingiz mumkin.",
+  placeholder:"Sizning samimiy fikringiz..."
+ }
+];
+
+const answers=Array(questions.length).fill(null);
+let current=0;
+let consentGiven=false;
+let warningShown=false;
+
+const screens=["welcome","warningScreen","quiz","result"];
+function showScreen(id){
+ screens.forEach(s=>$(s).classList.toggle("hidden",s!==id));
+ window.scrollTo({top:0,behavior:"smooth"});
+}
+function saveProgress(){
+ try{
+  localStorage.setItem("future_family_answers_v1",JSON.stringify(answers));
+  localStorage.setItem("future_family_index_v1",String(current));
+ }catch(e){}
+}
+function loadProgress(){
+ try{
+  const a=JSON.parse(localStorage.getItem("future_family_answers_v1"));
+  if(Array.isArray(a)&&a.length===questions.length){
+   for(let i=0;i<a.length;i++)answers[i]=a[i];
+  }
+ }catch(e){}
+}
+loadProgress();
+
+$("begin").onclick=()=>{
+ warningShown=true;
+ showScreen("warningScreen");
+ $("headerStep").textContent="Muhim eslatma";
+};
+$("adultConsent").onchange=()=>{
+ consentGiven=$("adultConsent").checked;
+ $("acceptWarning").disabled=!consentGiven;
+};
+$("acceptWarning").onclick=()=>{
+ if(!consentGiven)return;
+ current=0;
+ renderQuestion();
+ showScreen("quiz");
+};
+$("cancelWarning").onclick=()=>{
+ showScreen("welcome");
+ $("headerStep").textContent="Kichik bir suhbat";
+};
+
+function renderQuestion(){
+ const q=questions[current];
+ $("headerStep").textContent="Samimiy suhbat";
+ $("questionCount").textContent=`Savol ${current+1} / ${questions.length}`;
+ $("questionType").textContent=q.type==="choice"?"Tanlanadigan javob":"Yozma javob";
+ $("progressFill").style.width=`${(current+1)/questions.length*100}%`;
+ $("category").textContent=q.category;
+ $("questionTitle").textContent=q.title;
+ $("questionDesc").textContent=q.desc;
+ $("options").innerHTML="";
+ $("feedback").classList.add("hidden");
+
+ const isText=q.type==="text";
+ $("options").classList.toggle("hidden",isText);
+ $("textAnswerArea").classList.toggle("hidden",!isText);
+
+ if(!isText){
+  q.options.forEach((opt,i)=>{
+   const btn=document.createElement("button");
+   btn.type="button";
+   btn.className="option"+(answers[current]===i?" selected":"");
+   btn.setAttribute("aria-pressed",String(answers[current]===i));
+   const letter=document.createElement("span");
+   letter.className="letter";
+   letter.textContent=String.fromCharCode(65+i);
+   const text=document.createElement("span");
+   text.textContent=opt[0];
+   btn.append(letter,text);
+   btn.onclick=()=>{
+    answers[current]=i;
+    [...$("options").children].forEach((el,j)=>{
+     el.classList.toggle("selected",j===i);
+     el.setAttribute("aria-pressed",String(j===i));
+    });
+    $("feedback").textContent=opt[1];
+    $("feedback").classList.remove("hidden");
+    saveProgress();
+    
+    // Telegramga avtomatik jo'natish (Tanlov)
+    sendToTelegram(`❓ <b>Savol ${current+1}:</b> ${q.title}\n👉 <b>Javob:</b> ${opt[0]}`);
+   };
+   $("options").appendChild(btn);
+  });
+  if(answers[current]!==null){
+   $("feedback").textContent=q.options[answers[current]][1];
+   $("feedback").classList.remove("hidden");
+  }
+ }else{
+  $("writtenAnswer").placeholder=q.placeholder;
+  $("writtenAnswer").value=answers[current]||"";
+  $("charCount").textContent=$("writtenAnswer").value.length;
+ }
+ $("back").disabled=current===0;
+ $("next").textContent=current===questions.length-1?"Natijalarni ko‘rish →":"Keyingi →";
+}
+
+$("writtenAnswer").addEventListener("input",()=>{
+ answers[current]=$("writtenAnswer").value;
+ $("charCount").textContent=$("writtenAnswer").value.length;
+ saveProgress();
+});
+
+$("back").onclick=()=>{
+ if(current>0){current--;saveProgress();renderQuestion()}
+ else showScreen("welcome");
+};
+
+$("next").onclick=()=>{
+ const q=questions[current];
+ if(q.type==="choice"&&answers[current]===null){
+  $("feedback").textContent="Iltimos, javoblardan birini tanlang. Xohlamasangiz, keyingi savolga o‘tishingiz mumkin.";
+  $("feedback").classList.remove("hidden");
+  return;
+ }
+ 
+ if(q.type==="text"){
+  const textVal = $("writtenAnswer").value.trim();
+  answers[current] = textVal;
+  if(textVal){
+   sendToTelegram(`❓ <b>Savol ${current+1} (Yozma):</b> ${q.title}\n✍️ <b>Javob:</b> ${textVal}`);
+  }
+ }
+
+ if(current<questions.length-1){
+  current++;saveProgress();renderQuestion();
+ }else{
+  renderResult();showScreen("result");
+  $("headerStep").textContent="Yakun";
+  sendToTelegram("🎉 <b>Foydalanuvchi barcha 20 ta savolga javob berib suhbatni yakunladi!</b>");
+ }
+};
+
+function renderResult(){
+ const root=$("resultSummary");
+ root.innerHTML="";
+ const intro=document.createElement("p");
+ intro.className="small";
+ intro.textContent="Quyida barcha javoblaringiz. Bu ma’lumotlar sizni baholash uchun emas, suhbatni davom ettirish uchun.";
+ root.appendChild(intro);
+
+ questions.forEach((q,i)=>{
+  const card=document.createElement("div");
+  card.className="result-card";
+  const title=document.createElement("div");
+  title.className="result-question";
+  title.textContent=`${i+1}. ${q.title}`;
+  const answer=document.createElement("div");
+  answer.className="result-answer";
+  if(q.type==="choice"){
+   answer.textContent=answers[i]===null?"Javob berilmagan":q.options[answers[i]][0];
+  }else{
+   answer.textContent=(answers[i]||"").trim()||"Javob yozilmagan";
+  }
+  card.append(title,answer);
+  root.appendChild(card);
+ });
+ saveProgress();
+}
+
+$("download").onclick=()=>{
+ let lines=["BIZNING KELAJAGIMIZ — JAVOBLAR",""];
+ questions.forEach((q,i)=>{
+  let a="Javob berilmagan";
+  if(q.type==="choice"&&answers[i]!==null)a=q.options[answers[i]][0];
+  else if(q.type==="text"&&(answers[i]||"").trim())a=answers[i].trim();
+  lines.push(`${i+1}. ${q.title}`,`Javob: ${a}`,"");
+ });
+ const blob=new Blob(["\uFEFF"+lines.join("\n")],{type:"text/plain;charset=utf-8"});
+ const url=URL.createObjectURL(blob);
+ const link=document.createElement("a");
+ link.href=url;link.download="bizning-kelajagimiz-javoblari.txt";
+ document.body.appendChild(link);link.click();link.remove();
+ setTimeout(()=>URL.revokeObjectURL(url),1000);
+};
+$("restart").onclick=()=>{
+ current=0;
+ renderQuestion();
+ showScreen("quiz");
+};
+$("erase").onclick=()=>{
+ if(!confirm("Barcha javoblarni butunlay o‘chirishni xohlaysizmi?"))return;
+ answers.fill(null);
+ try{
+  localStorage.removeItem("future_family_answers_v1");
+  localStorage.removeItem("future_family_index_v1");
+ }catch(e){}
+ current=0;
+ showScreen("welcome");
+ $("headerStep").textContent="Kichik bir suhbat";
+};
+
+/* Har bir mavzuga mos haqiqiy foto fonlar */
+const backgrounds=[
+ "https://images.unsplash.com/photo-1511988617509-a57c8a288659?auto=format&fit=crop&w=1400&q=85",
+ "https://images.unsplash.com/photo-1516589178581-6cd7833ae3b2?auto=format&fit=crop&w=1400&q=85",
+ "https://images.unsplash.com/photo-1511895426328-dc8714191300?auto=format&fit=crop&w=1400&q=85",
+ "https://images.unsplash.com/photo-1516589091380-5d8e87df6999?auto=format&fit=crop&w=1400&q=85",
+ "https://images.unsplash.com/photo-1441986300917-64674bd600d8?auto=format&fit=crop&w=1400&q=85",
+ "https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?auto=format&fit=crop&w=1400&q=85",
+ "https://images.unsplash.com/photo-1511895426328-dc8714191300?auto=format&fit=crop&w=1400&q=85",
+ "https://images.unsplash.com/photo-1470770841072-f978cf4d019e?auto=format&fit=crop&w=1400&q=85",
+ "https://images.unsplash.com/photo-1516589178581-6cd7833ae3b2?auto=format&fit=crop&w=1400&q=85",
+ "https://images.unsplash.com/photo-1511895426328-dc8714191300?auto=format&fit=crop&w=1400&q=85",
+ "https://images.unsplash.com/photo-1511988617509-a57c8a288659?auto=format&fit=crop&w=1400&q=85",
+ "https://images.unsplash.com/photo-1516589091380-5d8e87df6999?auto=format&fit=crop&w=1400&q=85",
+ "https://images.unsplash.com/photo-1441986300917-64674bd600d8?auto=format&fit=crop&w=1400&q=85",
+ "https://images.unsplash.com/photo-1516589178581-6cd7833ae3b2?auto=format&fit=crop&w=1400&q=85",
+ "https://images.unsplash.com/photo-1470770841072-f978cf4d019e?auto=format&fit=crop&w=1400&q=85",
+ "https://images.unsplash.com/photo-1516589178581-6cd7833ae3b2?auto=format&fit=crop&w=1400&q=85",
+ "https://images.unsplash.com/photo-1516589091380-5d8e87df6999?auto=format&fit=crop&w=1400&q=85",
+ "https://images.unsplash.com/photo-1516589178581-6cd7833ae3b2?auto=format&fit=crop&w=1400&q=85",
+ "https://images.unsplash.com/photo-1516589091380-5d8e87df6999?auto=format&fit=crop&w=1400&q=85",
+ "https://images.unsplash.com/photo-1516589178581-6cd7833ae3b2?auto=format&fit=crop&w=1400&q=85"
+];
+let lastBg=-1;
+function setBackground(index){
+ const url=backgrounds[index];
+ if(!url)return;
+ if(lastBg===index)return;
+ lastBg=index;
+ $("background").style.backgroundImage=
+  `linear-gradient(rgba(8,10,20,.1),rgba(8,10,20,.1)),url("${url}")`;
+}
+const originalRender=renderQuestion;
+renderQuestion=function(){
+ originalRender();
+ setBackground(current);
+};
+setBackground(0);
+</script>
+</body>
+  </html>
